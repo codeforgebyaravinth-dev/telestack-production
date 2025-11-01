@@ -1,20 +1,11 @@
 [build]
-builder = "nixpacks"
+builder = "DOCKERFILE"
 
 [deploy]
-healthcheckPath = "/health/ready"
+healthcheckPath = "/auth/realms/master"
 healthcheckTimeout = 300
 
-[service]
-startCommand = "/opt/keycloak/bin/kc.sh start --optimized"
-
-[environments.production.variables]
-KEYCLOAK_ADMIN = "telestack-admin"
-KEYCLOAK_ADMIN_PASSWORD = "ChangeThisPassword123!"
-KC_DB = "postgres"
-KC_DB_URL = "jdbc:postgresql://DB_HOST:5432/postgres"
-KC_DB_USERNAME = "postgres"
-KC_DB_PASSWORD = "DB_PASSWORD"
-KC_HOSTNAME_STRICT = "false"
-KC_HEALTH_ENABLED = "true"
-KC_PROXY = "edge"
+[[services]]
+name = "keycloak"
+[http]
+port = 8080
