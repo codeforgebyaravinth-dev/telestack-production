@@ -2,7 +2,7 @@ FROM quay.io/keycloak/keycloak:latest
 
 # Switch to root to install curl for health checks
 USER root
-RUN microdnf update -y && microdnf install -y curl && microdnf clean all
+RUN apt-get update && apt-get install -y curl && apt-get clean
 
 # Switch back to keycloak user
 USER keycloak
