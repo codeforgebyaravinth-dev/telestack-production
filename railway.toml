@@ -1,0 +1,9 @@
+[build] 
+builder = "nixpacks" 
+ 
+[deploy] 
+healthcheckPath = "/health/ready" 
+healthcheckTimeout = 300 
+ 
+[service] 
+startCommand = "/opt/keycloak/bin/kc.sh start --optimized" 
