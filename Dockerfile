@@ -1,16 +1,22 @@
+FROM quay.io/keycloak/keycloak:latest as builder
+WORKDIR /opt/keycloak
+RUN /opt/keycloak/bin/kc.sh build
+
 FROM quay.io/keycloak/keycloak:latest
+COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
-# Switch to root to install curl for health checks
-USER root
-RUN apt-get update && apt-get install -y curl && apt-get clean
+# Database configuration
+ENV KC_DB=postgres
+ENV KC_DB_URL=${DATABASE_URL}
+ENV KC_DB_USERNAME=${DATABASE_USERNAME}
+ENV KC_DB_PASSWORD=${DATABASE_PASSWORD}
 
-# Switch back to keycloak user
-USER keycloak
-
-# Build Keycloak with CORRECT features
-RUN /opt/keycloak/bin/kc.sh build --db=postgres --features=scripts,authorization,account-api,recovery-codes
-
-EXPOSE 8080
+# Keycloak configuration
+ENV KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
+ENV KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
+ENV KC_HOSTNAME_STRICT=false
+ENV KC_HOSTNAME_STRICT_HTTPS=false
+ENV KC_PROXY=edge
 
 # Start Keycloak
-ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--optimized"]
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start"]
