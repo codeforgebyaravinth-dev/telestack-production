@@ -10,11 +10,11 @@ startCommand = "/opt/keycloak/bin/kc.sh start --optimized"
 
 [environments.production.variables]
 KEYCLOAK_ADMIN = "telestack-admin"
-KEYCLOAK_ADMIN_PASSWORD = "TeleStackForge098*#@"
+KEYCLOAK_ADMIN_PASSWORD = "ChangeThisPassword123!"
 KC_DB = "postgres"
 KC_DB_URL = "jdbc:postgresql://DB_HOST:5432/postgres"
 KC_DB_USERNAME = "postgres"
-KC_DB_PASSWORD = "Qwerty098*#@@#*"
+KC_DB_PASSWORD = "DB_PASSWORD"
 KC_HOSTNAME_STRICT = "false"
 KC_HEALTH_ENABLED = "true"
 KC_PROXY = "edge"
